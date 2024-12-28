@@ -42,14 +42,16 @@ function Statistics(props) {
       {total === 0 ? (
         <p>No feedback given</p>
       ) : (
-        <>
-          <StatisticsLine text="good" value={props.good} />
-          <StatisticsLine text="neutral" value={props.neutral} />
-          <StatisticsLine text="bad" value={props.bad} />
-          <StatisticsLine text="all" value={total} />
-          <StatisticsLine text="average" value={(props.good - props.bad) / total} />
-          <StatisticsLine text="positive" value={props.good / total * 100 + '%'} />
-        </>
+        <table>
+          <tbody>
+            <StatisticsLine text="good" value={props.good} />
+            <StatisticsLine text="neutral" value={props.neutral} />
+            <StatisticsLine text="bad" value={props.bad} />
+            <StatisticsLine text="all" value={total} />
+            <StatisticsLine text="average" value={(props.good - props.bad) / total} />
+            <StatisticsLine text="positive" value={props.good / total * 100 + '%'} />
+          </tbody>
+        </table>
       )}
     </div>
   )
@@ -57,7 +59,10 @@ function Statistics(props) {
 
 function StatisticsLine(props) {
   return (
-    <p>{props.text} {props.value}</p>
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
   )
 }
 
