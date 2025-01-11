@@ -35,14 +35,26 @@ function App() {
 
   const [selected, setSelected] = useState(0)
 
+  const handleVote = () => {
+    const newAnecdotes = [...anecdotes];
+    newAnecdotes[selected].points++;
+    setAnecdotes(newAnecdotes);
+  }
+
+  const handleNext = () => {
+    setSelected(selected => selected === anecdotes.length - 1 ? 0 : selected + 1);
+  }
+
   return (
     <div className="App">
-      <h1>give feedback</h1>
-      <button onClick={() => setSelected(selected + 1)}>next anecdote</button>
-      <button onClick={() => setSelected(selected - 1)}>previous anecdote</button>
-      <button onClick={() => setSelected(selected + 1)}>vote</button>
+      <h1>Anecdote of the day</h1>
+      <button onClick={handleNext}>next anecdote</button>
+      <button onClick={handleVote}>vote</button>
       <p>{anecdotes[selected].text}</p>
       <p>has {anecdotes[selected].points} votes</p>
+      <h1>Anecdote with most votes</h1>
+      <p>{mostPopular(anecdotes).text}</p>
+      <p>has {mostPopular(anecdotes).points} votes</p>
     </div>
   );
 }
