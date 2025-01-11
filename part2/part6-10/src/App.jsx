@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { usePhonebook } from "./usePhonebook";
 
 const App = () => {
-  const [persons, setPersons] = useState([]);
+  const { persons, refetch, createPerson, deletePerson } = usePhonebook();
+
   const [newContact, setNewContact] = useState({ name: "", number: "" });
   const [filter, setFilter] = useState("");
 
@@ -11,12 +13,8 @@ const App = () => {
 
   const submitName = (event) => {
     event.preventDefault();
-    if (persons.some((person) => person.name === newContact.name)) {
-      alert(`${newContact.name} is already in the phonebook`);
-    } else {
-      setPersons([...persons, newContact]);
-      setNewContact({ name: "", number: "" });
-    }
+    createPerson(newContact);
+    setNewContact({ name: "", number: "" });
   };
 
   const handleNumberChange = (event) => {
@@ -26,8 +24,7 @@ const App = () => {
   const handleFilterChange = (event) => {
     setFilter(event.target.value);
   };
-
-  const filteredPersons = persons.filter((person) =>
+  const filteredPersons = persons?.filter((person) =>
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 
@@ -43,7 +40,7 @@ const App = () => {
         submitName={submitName}
       />
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} />
+      <Persons persons={filteredPersons} deletePerson={deletePerson} />
     </div>
   );
 };
@@ -80,12 +77,13 @@ const PersonForm = ({
   );
 };
 
-const Persons = ({ persons }) => {
+const Persons = ({ persons, deletePerson }) => {
   return (
     <div>
       {persons.map((person) => (
         <div key={person.name}>
           {person.name} {person.number}
+          <button onClick={() => deletePerson(person)}>delete</button>
         </div>
       ))}
     </div>
