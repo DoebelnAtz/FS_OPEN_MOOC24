@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { usePhonebook } from "./usePhonebook";
-
+import "./App.css";
 const App = () => {
-  const { persons, refetch, createPerson, deletePerson } = usePhonebook();
+  const { persons, refetch, createPerson, deletePerson, toasts } =
+    usePhonebook();
 
   const [newContact, setNewContact] = useState({ name: "", number: "" });
   const [filter, setFilter] = useState("");
@@ -28,9 +29,17 @@ const App = () => {
     person.name.toLowerCase().includes(filter.toLowerCase())
   );
 
+  const renderToasts = () => {
+    return toasts.map((toast, index) => (
+      <div className={`toast ${toast.type}`} key={index}>
+        {toast.message}
+      </div>
+    ));
+  };
   return (
     <div>
       <h2>Phonebook</h2>
+      {renderToasts()}
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
       <PersonForm
