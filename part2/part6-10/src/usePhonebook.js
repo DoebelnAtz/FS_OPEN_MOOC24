@@ -35,8 +35,12 @@ export const usePhonebook = () => {
   const { data: persons, refetch } = useGet("");
 
   const createPerson = async (person) => {
-    if (persons.some((person) => person.name === person.name)) {
-      alert(`${person.name} is already in the phonebook`);
+    const existingPerson = persons.find((person) => person.name === person.name)
+    if (existingPerson) {
+      if (window.confirm(`${person.name} is already added to the phonebook, replace the old number with a new one?`)) {
+        const updatedPerson = { ...existingPerson, number: person.number }
+        await updatePerson(updatedPerson)
+      }
     } else {
       await instance.post('', person)
       refetch();
@@ -44,7 +48,7 @@ export const usePhonebook = () => {
   };
 
   const updatePerson = async (person) => {
-    await instance.put('', person)
+    await instance.put(`/${person.id}`, person)
     refetch();
   }
 
