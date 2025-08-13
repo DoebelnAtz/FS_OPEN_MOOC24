@@ -41,13 +41,7 @@ app.get("/info", (req, res) => {
   <p>${new Date()}</p>`);
 });
 
-// Serve static files from the local dist directory
 app.use(express.static('dist'));
-
-// Catch-all handler: send back React's index.html file for any non-API routes
-app.get('*', (req, res) => {
-  res.sendFile('dist/index.html', { root: '.' });
-});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
