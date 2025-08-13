@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const baseUrl = "http://localhost:3001/api/persons";
+const baseUrl =
+  import.meta.env.MODE === "production"
+    ? `${window.location.origin}/api/persons`
+    : "http://localhost:3001/api/persons";
+
 const instance = axios.create({
   baseURL: baseUrl,
 });
