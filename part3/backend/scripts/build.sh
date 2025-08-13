@@ -15,7 +15,7 @@ echo "[build] Frontend dir: $frontend_dir"
 if [[ "$clean_flag" == "--clean" ]]; then
   echo "[build] Cleaning backend dist directory"
   rm -rf "$backend_dir/dist"
-  rm -rf "$backend_dir/build"
+  exit 0
 fi
 
 echo "[build] Installing backend dependencies"
@@ -31,17 +31,4 @@ echo "[build] Copying frontend build to backend/dist"
 rm -rf "$backend_dir/dist"
 cp -R "$frontend_dir/dist" "$backend_dir/dist"
 
-echo "[build] Creating backend build artifact (build/)"
-rm -rf "$backend_dir/build"
-mkdir -p "$backend_dir/build"
-cp "$backend_dir/index.js" "$backend_dir/build/index.js"
-cp "$backend_dir/package.json" "$backend_dir/build/package.json"
-cp -R "$backend_dir/routes" "$backend_dir/build/routes"
-cp -R "$backend_dir/dist" "$backend_dir/build/dist"
-
-echo "[build] Installing production dependencies in build/"
-(cd "$backend_dir/build" && npm install --omit=dev)
-
 echo "[build] Done"
-
-
