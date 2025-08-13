@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { usePhonebook } from "./usePhonebook";
-import "./App.css";
+import "./app.css";
+
 const App = () => {
   const { persons, refetch, createPerson, deletePerson, toasts } =
     usePhonebook();
