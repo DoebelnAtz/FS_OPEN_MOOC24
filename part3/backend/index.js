@@ -1,10 +1,13 @@
 import express from "express";
 import morgan from "morgan";
+import cors from "cors";
 import personsRouter from "./routes/persons.js";
 import { phonebook } from "./routes/persons.js";
 
 const app = express();
 const PORT = 3001;
+
+app.use(cors());
 
 morgan('tiny')
 morgan.token('post', (req) => !!req.body ? JSON.stringify(req.body) : '')

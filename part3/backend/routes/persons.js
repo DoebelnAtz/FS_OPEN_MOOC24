@@ -39,6 +39,13 @@ router.get("/:id", (req, res) => {
   }
 });
 
+router.put("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const person = req.body;
+  phonebook = phonebook.map((p) => (p.id === id ? person : p));
+  res.json(person);
+});
+
 router.delete("/:id", (req, res) => {
   const id = Number(req.params.id);
   phonebook = phonebook.filter((person) => person.id !== id);
